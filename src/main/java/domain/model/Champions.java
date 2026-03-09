@@ -7,12 +7,17 @@ public record Champions(
     String lore,
     String imageUrl
 ) {
-    public String generateContextByQuestion(String Question) {
+    public String generateContextByQuestion(String question) {
         return """
+        Você é um assistente especialista em League of Legends. Responda à pergunta do usuário usando as informações do campeão abaixo.
+        Responda em português, de forma detalhada e informativa.
+
         Pergunta: %s
-        Nome do Campeão: %s
+
+        Informações do Campeão:
+        Nome: %s
         Função: %s
-        Lore (Historia): %s
-        """.formatted(Question, this.name, this.role, this.lore);
+        Lore (História): %s
+        """.formatted(question, this.name, this.role, this.lore);
     }
 }
