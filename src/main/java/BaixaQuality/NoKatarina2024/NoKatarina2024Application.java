@@ -3,8 +3,10 @@ package BaixaQuality.NoKatarina2024;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 import BaixaQuality.NoKatarina2024.application.AskChampionsUseCase;
+import BaixaQuality.NoKatarina2024.application.GeminiAIService;
 import BaixaQuality.NoKatarina2024.application.ListChampionsUseCase;
 import ports.ChampionsRepository;
 
@@ -12,17 +14,22 @@ import ports.ChampionsRepository;
 public class NoKatarina2024Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NoKatarina2024Application.class, args); }
-	
-     @Bean
-     public ListChampionsUseCase providelListChampionsUseCase(ChampionsRepository Repository) {
-     return new ListChampionsUseCase(Repository);
+		SpringApplication.run(NoKatarina2024Application.class, args);
 	}
 
-     @Bean
-     public AskChampionsUseCase provideAskChampionsUseCase(ChampionsRepository Repository) {
-     return new AskChampionsUseCase(Repository);
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 
+	@Bean
+	public ListChampionsUseCase provideListChampionsUseCase(ChampionsRepository repository) {
+		return new ListChampionsUseCase(repository);
+	}
+
+	@Bean
+	public AskChampionsUseCase provideAskChampionsUseCase(ChampionsRepository repository, GeminiAIService geminiAIService) {
+		return new AskChampionsUseCase(repository, geminiAIService);
+	}
 
 }
